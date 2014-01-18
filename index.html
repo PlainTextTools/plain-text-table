@@ -15,7 +15,7 @@
         <link rel="stylesheet" href="vendor/boilerplate/main.css">
         <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
         <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap-theme.min.css">
-        <link rel="stylesheet" href="vendor/bootstrap3-editable/css/bootstrap-editable.css">
+        <link rel="stylesheet" href="vendor/handsontable/jquery.handsontable.full.css">
         <script src="vendor/modernizr/modernizr-2.6.2.min.js"></script>
 
         <link rel="stylesheet" href="css/main.css">
@@ -68,13 +68,28 @@
                 This web based tool provides a dead simple way for doing just that - sans
                 the PITA.
             </p>
+
+            <hr>
+            <h2> Your table </h2>
+            <p> Click to edit cell, Right click for options </p>
+            <div id='table-wrapper'>
+            </div>
+            <br>
+            <button id='gen-trigger' class="btn btn-primary"> Generate plain text table </button>
+            <pre id="ptt-wrapper"></pre>
+            <hr>
+            <h2> Credits: </h2>
+            <ul>
+                <li> <a href="http://handsontable.com/"> Handsontable </a></li>
+                <li> <a href="http://getbootstrap.com/"> Twitter Bootstrap </a></li>
+            </ul>
         </div>
 
 
         <script src="vendor/polyfills/console.js"></script>
         <script src="vendor/jquery/jquery-1.10.2.min.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-        <script src="vendor/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+        <script src="vendor/handsontable/jquery.handsontable.full.js"></script>
         <script src="js/main.js"></script>
 
         <!-- [TODO] Google Analytics: change UA-XXXXX-X to be your site's ID. -->
