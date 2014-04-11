@@ -116,5 +116,4 @@
     }
 
     createTable();
-    bindGenerator();
 })();
