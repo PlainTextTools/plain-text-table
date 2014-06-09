@@ -4,7 +4,8 @@
     function createTable(){
         $("#table-wrapper").handsontable({
             colHeaders: false,
-            contextMenu: true
+            contextMenu: true,
+            afterChange: genPTT
         });
     }
 
@@ -114,10 +115,5 @@
         $('#ptt-wrapper').text(str);
     }
 
-    function bindGenerator(){
-        $('#gen-trigger').click(genPTT);
-    }
-
     createTable();
-    bindGenerator();
 })();
