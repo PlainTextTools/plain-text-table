@@ -5,3 +5,6 @@
 #gen-trigger {
     margin-bottom: 10px;
 }
+.footer-table th, .footer-table td{
+    width: 33%;
+}
