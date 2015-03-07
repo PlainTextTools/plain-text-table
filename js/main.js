@@ -74,7 +74,7 @@
             for (m = 0; m < pseudoRows.length; m++) {
                 str += '│';
                 for (i = 0; i < widths.length; i++) {
-                    entry = pseudoRows[m][i] || ''; 
+                    entry = pseudoRows[m][i] || '';
                     str += entry;
                     for (j = entry.length; j < widths[i]; j++) {
                         str += ' ';
@@ -86,12 +86,12 @@
                 str += '│\n';
             }
 
-            
+
             if (k < arr.length-1) {
                 str += '├';
                 for (i = 0; i < widths.length; i++) {
                     for (j = 0; j < widths[i]; j++) {
-                        str += '─';   
+                        str += '─';
                     }
                     if (i < widths.length-1) {
                         str += '┼';
