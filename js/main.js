@@ -35,22 +35,37 @@
     }
 
     function genPTT(){
+        var style = {
+            horizontal: '─',
+            vertical: '│',
+            top_left: '┌',
+            top_center: '┬',
+            top_right: '┐',
+            middle_left: '├',
+            middle_center: '┼',
+            middle_right: '┤',
+            bottom_left: '└',
+            bottom_center: '┴',
+            bottom_right: '┘'
+        }
+
         var arr = extractData();
         var widths = getWidths(arr);
         var str = "";
         var i, j, k, m, entry, row, pseudoRows, plen;
 
         // top
-        str += '┌';
+        str += style['top_left'];
         for (i = 0; i < widths.length; i++) {
             for (j = 0; j < widths[i]; j++) {
-                str += '─';
+                str += style['horizontal'];
             }
             if (i < widths.length-1) {
-                str += '┬';
+                str += style['top_center'];
             }
         }
-        str += '┐\n';
+        str += style['top_right'];
+        str += '\n';
 
         // rows
         for (k = 0; k < arr.length; k++) {
@@ -72,7 +87,7 @@
             }
 
             for (m = 0; m < pseudoRows.length; m++) {
-                str += '│';
+                str += style['vertical'];
                 for (i = 0; i < widths.length; i++) {
                     entry = pseudoRows[m][i] || '';
                     str += entry;
@@ -80,38 +95,41 @@
                         str += ' ';
                     }
                     if (i < widths.length-1) {
-                        str += '│';
+                        str += style['vertical'];
                     }
                 }
-                str += '│\n';
+                str += style['vertical'];
+                str += '\n';
             }
 
 
             if (k < arr.length-1) {
-                str += '├';
+                str += style['middle_left'];
                 for (i = 0; i < widths.length; i++) {
                     for (j = 0; j < widths[i]; j++) {
-                        str += '─';
+                        str += style['horizontal'];
                     }
                     if (i < widths.length-1) {
-                        str += '┼';
+                        str += style['middle_center'];
                     }
                 }
-                str += '┤\n';
+                str += style['middle_right'];
+                str += '\n';
             }
         }
 
         // bottom
-        str += '└';
+        str += style['bottom_left'];
         for (i = 0; i < widths.length; i++) {
             for (j = 0; j < widths[i]; j++) {
-                str += '─';
+                str += style['horizontal'];
             }
             if (i < widths.length-1) {
-                str += '┴';
+                str += style['bottom_center'];
             }
         }
-        str += '┘\n';
+        str += style['bottom_right'];
+        str += '\n';
         $('#ptt-wrapper').text(str);
     }
 
