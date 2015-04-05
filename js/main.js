@@ -65,17 +65,7 @@ function genPTT(){
     var i, j, k, m, entry, row, pseudoRows, plen;
 
     // top
-    str += style['top_left'];
-    for (i = 0; i < widths.length; i++) {
-        for (j = 0; j < widths[i]; j++) {
-            str += style['horizontal'];
-        }
-        if (i < widths.length-1) {
-            str += style['top_center'];
-        }
-    }
-    str += style['top_right'];
-    str += '\n';
+    str += generateSeparationLine(widths, style, 'top_left', 'top_center', 'top_right');
 
     // rows
     for (k = 0; k < arr.length; k++) {
@@ -114,32 +104,12 @@ function genPTT(){
 
 
         if (k < arr.length-1) {
-            str += style['middle_left'];
-            for (i = 0; i < widths.length; i++) {
-                for (j = 0; j < widths[i]; j++) {
-                    str += style['horizontal'];
-                }
-                if (i < widths.length-1) {
-                    str += style['middle_center'];
-                }
-            }
-            str += style['middle_right'];
-            str += '\n';
+            str += generateSeparationLine(widths, style, 'middle_left', 'middle_center', 'middle_right');
         }
     }
 
     // bottom
-    str += style['bottom_left'];
-    for (i = 0; i < widths.length; i++) {
-        for (j = 0; j < widths[i]; j++) {
-            str += style['horizontal'];
-        }
-        if (i < widths.length-1) {
-            str += style['bottom_center'];
-        }
-    }
-    str += style['bottom_right'];
-    str += '\n';
+    str += generateSeparationLine(widths, style, 'bottom_left', 'bottom_center', 'bottom_right');
     $('#ptt-wrapper').text(str);
 }
 
@@ -166,4 +136,20 @@ function getWidths(arr){
         }
     }
     return widths;
+}
+
+function generateSeparationLine(widths, style, leftKey, centerKey, rightKey){
+    var str = "";
+    str += style[leftKey];
+    for (i = 0; i < widths.length; i++) {
+        for (j = 0; j < widths[i]; j++) {
+            str += style['horizontal'];
+        }
+        if (i < widths.length-1) {
+            str += style[centerKey];
+        }
+    }
+    str += style[rightKey];
+    str += '\n';
+    return str;
 }
