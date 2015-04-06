@@ -63,6 +63,7 @@ function genPTT(){
     var widths = getWidths(arr);
     var str = "";
     var i, j, k, m, entry, row, pseudoRows, plen;
+    var typeOption = document.getElementById('type').value;
 
     // top
     str += generateSeparationLine(widths, style, 'top_left', 'top_center', 'top_right');
