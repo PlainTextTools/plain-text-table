@@ -74,7 +74,12 @@
             <div id='table-wrapper'>
             </div>
             <br>
-            <p>Style: <select id="style" name="style" onchange="genPTT()">
+            <p>Type: <select id="type" name="type" onchange="genPTT();">
+              <option value="grid">Grid</option>
+              <option value="header">Header (first line)</option>
+              <option value="columns">Columns only</option>
+            </select></p>
+            <p>Style: <select id="style" name="style" onchange="genPTT();">
               <option value="simple">Single border</option>
               <option value="double">Double border</option>
               <option value="ascii">ASCII characters</option>
