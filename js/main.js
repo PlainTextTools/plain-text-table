@@ -5,7 +5,8 @@
         $("#table-wrapper").handsontable({
             colHeaders: false,
             contextMenu: true,
-            afterChange: genPTT
+            afterChange: genPTT,
+            afterSetCellMeta: genPTT
         });
     }
 
@@ -58,44 +59,56 @@ function genPTT(){
             bottom_right: '┘'
         }
     }
+    var spacePadding = document.getElementById("spacePadding").checked
 
-    var arr = extractData();
-    var widths = getWidths(arr);
+    var data = extractData(spacePadding);
+    var widths = getWidths(data, spacePadding);
+    var heights = getHeights(data, spacePadding);
     var str = "";
-    var i, j, k, m, entry, row, pseudoRows, plen;
+    var i, j, k, m, entry, item, offsets, end;
     var typeOption = document.getElementById('type').value;
 
     // top
     str += generateSeparationLine(widths, style, 'top_left', 'top_center', 'top_right');
 
     // rows
-    for (k = 0; k < arr.length; k++) {
-
-        row = arr[k];
-        pseudoRows = [];
-
-        for (i = 0; i < widths.length; i++) {
-            entry = arr[k][i];
-            if (! entry) continue;
-            entry = entry.split('\n');
-            plen = pseudoRows.length;
-            for (j = 0; j < entry.length - plen; j++) {
-                pseudoRows.push([]);
-            }
-            for (j = 0; j < entry.length; j++) {
-                pseudoRows[j][i] = entry[j];
+    for (i = 0; i < heights.length; i++) {
+        offsets = [];
+        for (j = 0; j < widths.length; j++) {
+            if('bottom' == data['arr'][i][j]['vAlign']) {
+                offsets[j] = data['arr'][i][j]['pseudoRows'].length - heights[i];
+            } else if ('middle' == data['arr'][i][j]['vAlign']) {
+                offsets[j] = Math.ceil((data['arr'][i][j]['pseudoRows'].length - heights[i]) / 2);
+            } else {
+                offsets[j] = 0;
             }
         }
 
-        for (m = 0; m < pseudoRows.length; m++) {
+        for (m = 0; m < heights[i]; m++) {
             str += style['vertical'];
-            for (i = 0; i < widths.length; i++) {
-                entry = pseudoRows[m][i] || '';
-                str += entry;
-                for (j = entry.length; j < widths[i]; j++) {
+            for (j = 0; j < widths.length; j++) {
+                item = data['arr'][i][j];
+                if(item['empty']) {
+                    entry = '';
+                } else {
+                    entry = item['pseudoRows'][m + offsets[j]] || '';
+                }
+                if('right' == data['arr'][i][j]['hAlign']) {
+                    end = widths[j] - entry.length;
+                } else if ('center' == data['arr'][i][j]['hAlign']) {
+                    end = Math.floor((widths[j] - entry.length) / 2);
+                } else {
+                    end = 0;
+                }
+                for (k = 0; k < end; k++) {
                     str += ' ';
                 }
-                if (i < widths.length-1) {
+                str += entry;
+                end = widths[j] - entry.length - end;
+                for (k = 0; k < end; k++) {
+                    str += ' ';
+                }
+                if (j < widths.length-1) {
                     str += style['vertical'];
                 }
             }
@@ -103,7 +116,7 @@ function genPTT(){
             str += '\n';
         }
 
-        if (('grid' == typeOption && k < arr.length-1) || ('header' == typeOption && k == 0 && k < arr.length-1)) {
+        if (('grid' == typeOption && i < heights.length-1) || ('header' == typeOption && i == 0 && i < heights.length-1)) {
             str += generateSeparationLine(widths, style, 'middle_left', 'middle_center', 'middle_right');
         }
     }
@@ -113,29 +126,107 @@ function genPTT(){
     $('#ptt-wrapper').text(str);
 }
 
-function extractData(){
-    return $('#table-wrapper').handsontable('getData');
+function extractData(spacePadding){
+    var i, j, k, item, lines, w, meta, vAlign, hAlign;
+    var result = [];
+    var table = $('#table-wrapper');
+    var arr = table.handsontable('getData');
+    for(i = 0; i < arr.length; i++) {
+        result.push([]);
+        for (j = 0; j < arr[i].length; j++) {
+            item = arr[i][j];
+            if (! item) {
+                result[i][j] = {empty: true};
+            } else {
+                w = 0;
+                lines = item.split('\n');
+                for (k = 0; k < lines.length; k++) {
+                    if(spacePadding) {
+                        if(lines[k].indexOf(' ', 0) !== 0) {
+                            lines[k] = ' ' + lines[k];
+                        }
+                        if(lines[k].indexOf(' ', lines[k].length - 1) === -1) {
+                            lines[k] = lines[k] + ' ';
+                        }
+                    }
+                    if (lines[k].length > w) {
+                        w = lines[k].length;
+                    }
+                }
+                meta = table.handsontable('getCellMeta', i, j);
+                hAlign = 'left';
+                vAlign = 'top';
+                if(meta['className']) {
+                    if(meta['className'].indexOf('htCenter') > -1) {
+                        hAlign = 'center';
+                    } else if(meta['className'].indexOf('htRight') > -1) {
+                        hAlign = 'right';
+                    } else if(meta['className'].indexOf('htJustify') > -1) {
+                        hAlign = 'justify';
+                    }
+                    if(meta['className'].indexOf('htMiddle') > -1) {
+                        vAlign = 'middle';
+                    } else if(meta['className'].indexOf('htBottom') > -1) {
+                        vAlign = 'bottom';
+                    }
+                }
+                result[i][j] = {empty: false, pseudoRows: lines, maxWidth: w, vAlign: vAlign, hAlign: hAlign};
+            }
+        }
+    }
+    return {arr: result, vLen: i, hLen: j};
 }
 
-function getWidths(arr){
+function getWidths(data, spacePadding){
     var widths = [];
-    var i, j, k, w, item, lines;
+    var i, j, w, item;
+    var hasContent = false;
 
-    for(i = 0; i < arr.length; i++) {
-        for (j = 0; j < arr[i].length; j++) {
-            w = widths[j] || 0;
-            item = arr[i][j];
-            if (! item) continue;
-            lines = item.split('\n');
-            for (k = 0; k < lines.length; k++) {
-                if (lines[k].length > w) {
-                    w = lines[k].length;
+    for (j = data['hLen'] - 1; j >= 0; j--) {
+        w = 0;
+        for (i = 0; i < data['vLen']; i++) {
+            item = data['arr'][i][j];
+            if (!item['empty']) {
+                if (item['maxWidth'] > w) {
+                    w = item['maxWidth'];
                 }
             }
+        }
+        if(hasContent || w > 0) {
+            if(spacePadding && w == 0) {
+                w = 1;
+            }
             widths[j] = w;
+            hasContent = true;
         }
     }
     return widths;
+}
+
+function getHeights(data, spacePadding){
+    var heights = [];
+    var i, j, h, item;
+    var hasContent = false;
+
+    for (i = data['vLen'] - 1; i >= 0; i--) {
+        h = 0;
+        for (j = 0; j < data['hLen']; j++) {
+            item = data['arr'][i][j];
+            if (!item['empty']) {
+                if (item['pseudoRows'].length > h) {
+                    h = item['pseudoRows'].length;
+                }
+            }
+        }
+        if(hasContent || h > 0) {
+            if(spacePadding && h == 0) {
+                h = 1;
+            }
+            heights[i] = h;
+            hasContent = true;
+        }
+    }
+    return heights;
 }
 
 function generateSeparationLine(widths, style, leftKey, centerKey, rightKey){
