@@ -103,7 +103,7 @@ function genPTT(){
             str += '\n';
         }
 
-        if (('grid' == typeOption && k < arr.length-1) || ('header' == typeOption && k == 0)) {
+        if (('grid' == typeOption && k < arr.length-1) || ('header' == typeOption && k == 0 && k < arr.length-1)) {
             str += generateSeparationLine(widths, style, 'middle_left', 'middle_center', 'middle_right');
         }
     }
