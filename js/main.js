@@ -29,7 +29,7 @@ function genPTT(){
             bottom_left: '╚',
             bottom_center: '╩',
             bottom_right: '╝'
-        }
+        };
     } else if('ascii' == styleOption) {
         style = {
             horizontal: '-',
@@ -43,7 +43,7 @@ function genPTT(){
             bottom_left: '+',
             bottom_center: '+',
             bottom_right: '+'
-        }
+        };
     } else {
         style = {
             horizontal: '─',
@@ -57,9 +57,9 @@ function genPTT(){
             bottom_left: '└',
             bottom_center: '┴',
             bottom_right: '┘'
-        }
+        };
     }
-    var spacePadding = document.getElementById("spacePadding").checked
+    var spacePadding = document.getElementById("spacePadding").checked;
 
     var data = extractData(spacePadding);
     var widths = getWidths(data, spacePadding);
@@ -75,27 +75,27 @@ function genPTT(){
     for (i = 0; i < heights.length; i++) {
         offsets = [];
         for (j = 0; j < widths.length; j++) {
-            if('bottom' == data['arr'][i][j]['vAlign']) {
-                offsets[j] = data['arr'][i][j]['pseudoRows'].length - heights[i];
-            } else if ('middle' == data['arr'][i][j]['vAlign']) {
-                offsets[j] = Math.ceil((data['arr'][i][j]['pseudoRows'].length - heights[i]) / 2);
+            if('bottom' == data.arr[i][j].vAlign) {
+                offsets[j] = data.arr[i][j].pseudoRows.length - heights[i];
+            } else if ('middle' == data.arr[i][j].vAlign) {
+                offsets[j] = Math.ceil((data.arr[i][j].pseudoRows.length - heights[i]) / 2);
             } else {
                 offsets[j] = 0;
             }
         }
 
         for (m = 0; m < heights[i]; m++) {
-            str += style['vertical'];
+            str += style.vertical;
             for (j = 0; j < widths.length; j++) {
-                item = data['arr'][i][j];
-                if(item['empty']) {
+                item = data.arr[i][j];
+                if(item.empty) {
                     entry = '';
                 } else {
-                    entry = item['pseudoRows'][m + offsets[j]] || '';
+                    entry = item.pseudoRows[m + offsets[j]] || '';
                 }
-                if('right' == data['arr'][i][j]['hAlign']) {
+                if('right' == data.arr[i][j].hAlign) {
                     end = widths[j] - entry.length;
-                } else if ('center' == data['arr'][i][j]['hAlign']) {
+                } else if ('center' == data.arr[i][j].hAlign) {
                     end = Math.floor((widths[j] - entry.length) / 2);
                 } else {
                     end = 0;
@@ -109,10 +109,10 @@ function genPTT(){
                     str += ' ';
                 }
                 if (j < widths.length-1) {
-                    str += style['vertical'];
+                    str += style.vertical;
                 }
             }
-            str += style['vertical'];
+            str += style.vertical;
             str += '\n';
         }
 
@@ -156,17 +156,17 @@ function extractData(spacePadding){
                 meta = table.handsontable('getCellMeta', i, j);
                 hAlign = 'left';
                 vAlign = 'top';
-                if(meta['className']) {
-                    if(meta['className'].indexOf('htCenter') > -1) {
+                if(meta.className) {
+                    if(meta.className.indexOf('htCenter') > -1) {
                         hAlign = 'center';
-                    } else if(meta['className'].indexOf('htRight') > -1) {
+                    } else if(meta.className.indexOf('htRight') > -1) {
                         hAlign = 'right';
-                    } else if(meta['className'].indexOf('htJustify') > -1) {
+                    } else if(meta.className.indexOf('htJustify') > -1) {
                         hAlign = 'justify';
                     }
-                    if(meta['className'].indexOf('htMiddle') > -1) {
+                    if(meta.className.indexOf('htMiddle') > -1) {
                         vAlign = 'middle';
-                    } else if(meta['className'].indexOf('htBottom') > -1) {
+                    } else if(meta.className.indexOf('htBottom') > -1) {
                         vAlign = 'bottom';
                     }
                 }
@@ -182,13 +182,13 @@ function getWidths(data, spacePadding){
     var i, j, w, item;
     var hasContent = false;
 
-    for (j = data['hLen'] - 1; j >= 0; j--) {
+    for (j = data.hLen - 1; j >= 0; j--) {
         w = 0;
-        for (i = 0; i < data['vLen']; i++) {
-            item = data['arr'][i][j];
-            if (!item['empty']) {
-                if (item['maxWidth'] > w) {
-                    w = item['maxWidth'];
+        for (i = 0; i < data.vLen; i++) {
+            item = data.arr[i][j];
+            if (!item.empty) {
+                if (item.maxWidth > w) {
+                    w = item.maxWidth;
                 }
             }
         }
@@ -208,13 +208,13 @@ function getHeights(data, spacePadding){
     var i, j, h, item;
     var hasContent = false;
 
-    for (i = data['vLen'] - 1; i >= 0; i--) {
+    for (i = data.vLen - 1; i >= 0; i--) {
         h = 0;
-        for (j = 0; j < data['hLen']; j++) {
-            item = data['arr'][i][j];
-            if (!item['empty']) {
-                if (item['pseudoRows'].length > h) {
-                    h = item['pseudoRows'].length;
+        for (j = 0; j < data.hLen; j++) {
+            item = data.arr[i][j];
+            if (!item.empty) {
+                if (item.pseudoRows.length > h) {
+                    h = item.pseudoRows.length;
                 }
             }
         }
@@ -230,11 +230,12 @@ function getHeights(data, spacePadding){
 }
 
 function generateSeparationLine(widths, style, leftKey, centerKey, rightKey){
+    var i, j;
     var str = "";
     str += style[leftKey];
     for (i = 0; i < widths.length; i++) {
         for (j = 0; j < widths[i]; j++) {
-            str += style['horizontal'];
+            str += style.horizontal;
         }
         if (i < widths.length-1) {
             str += style[centerKey];
