@@ -6,6 +6,10 @@
             colHeaders: false,
             contextMenu: true,
             afterChange: genPTT,
+            afterCreateRow: genPTT,
+            afterRemoveRow: genPTT,
+            afterCreateCol: genPTT,
+            afterRemoveCol: genPTT,
             afterSetCellMeta: genPTT
         });
     }
