@@ -74,21 +74,99 @@
             <div id='table-wrapper'>
             </div>
             <br>
-            <p>Type: <select id="type" name="type" onchange="genPTT();">
-              <option value="grid">Grid</option>
-              <option value="header">Header (first line)</option>
-              <option value="columns">Columns only</option>
-            </select></p>
-            <p>Style: <select id="style" name="style" onchange="genPTT();">
-              <option value="simple">Single border</option>
-              <option value="double">Double border</option>
-              <option value="ascii">ASCII characters</option>
-            </select></p>
-            <p><input type="checkbox" id="spacePadding" checked="checked" onclick="genPTT();"> Ensure a padding of one space in each cell.</input></p>
             <pre id="ptt-wrapper"></pre>
             <hr>
+            <div id="configuration" class="col-md-6">
+                <p>Characters: <select id="charset" name="charset" onchange="charsetSelectChange(this);">
+                  <option value="ascii">Ascii</option>
+                  <option value="unicode" selected="selected">Unicode</option>
+                </select></p>
+                <hr/>
+                <p>Horizontal Header: <select id="horizontal_header" name="horizontalHeader" onchange="horizontalHeaderSelectChange(this);">
+                  <option value="none">None</option>
+                  <option value="first_line" selected="selected">First line</option>
+                  <option value="number">Number</option>
+                  <option value="letter">Letter</option>
+                </select></p>
+                <p>Vertical Header: <select id="vertical_header" name="verticalHeader" onchange="verticalHeaderSelectChange(this);">
+                  <option value="none" selected="selected">None</option>
+                  <option value="first_column">First column</option>
+                  <option value="number">Number</option>
+                  <option value="letter">Letter</option>
+                </select></p>
+                <hr/>
+                <p>Horizontal Top Border: <select id="horizontal_top_border" name="horizontalTopBorder" onfocus="borderSelectGetFocus(this);" onchange="borderSelectChange(this);" onblur="borderSelectLostFocus(this);">
+                  <option value="none">None</option>
+                  <option value="single">Single</option>
+                  <option value="double" selected="selected">Double</option>
+                </select></p>
+                <p id="p_horizontal_inner_header_border">Horizontal Inner Header Border: <select id="horizontal_inner_header_border" name="horizontalInnerHeaderBorder" onfocus="borderSelectGetFocus(this);" onchange="borderSelectChange(this);" onblur="borderSelectLostFocus(this);">
+                  <option value="none">None</option>
+                  <option value="single">Single</option>
+                  <option value="double" selected="selected">Double</option>
+                </select></p>
+                <p>Horizontal Inner Border: <select id="horizontal_inner_border" name="horizontalInnerBorder" onfocus="borderSelectGetFocus(this);" onchange="borderSelectChange(this);" onblur="borderSelectLostFocus(this);">
+                  <option value="none">None</option>
+                  <option value="single" selected="selected">Single</option>
+                  <option value="double">Double</option>
+                </select></p>
+                <p>Horizontal Bottom Border: <select id="horizontal_bottom_border" name="horizontalBottomBorder" onfocus="borderSelectGetFocus(this);" onchange="borderSelectChange(this);" onblur="borderSelectLostFocus(this);">
+                  <option value="none">None</option>
+                  <option value="single">Single</option>
+                  <option value="double" selected="selected">Double</option>
+                </select></p>
+                <hr/>
+                <p>Vertical Left Border: <select id="vertical_left_border" name="verticalLeftBorder" onfocus="borderSelectGetFocus(this);" onchange="borderSelectChange(this);" onblur="borderSelectLostFocus(this);">
+                  <option value="none">None</option>
+                  <option value="single">Single</option>
+                  <option value="double" selected="selected">Double</option>
+                </select></p>
+                <p id="p_vertical_inner_header_border">Vertical Inner Header Border: <select id="vertical_inner_header_border" name="verticalInnerHeaderBorder" onfocus="borderSelectGetFocus(this);" onchange="borderSelectChange(this);" onblur="borderSelectLostFocus(this);">
+                  <option value="none">None</option>
+                  <option value="single">Single</option>
+                  <option value="double" selected="selected">Double</option>
+                </select></p>
+                <p>Vertical Inner Border: <select id="vertical_inner_border" name="verticalInnerBorder" onfocus="borderSelectGetFocus(this);" onchange="borderSelectChange(this);" onblur="borderSelectLostFocus(this);">
+                  <option value="none">None</option>
+                  <option value="single" selected="selected">Single</option>
+                  <option value="double">Double</option>
+                </select></p>
+                <p>Vertical Right Border: <select id="vertical_right_border" name="verticalRightBorder" onfocus="borderSelectGetFocus(this);" onchange="borderSelectChange(this);" onblur="borderSelectLostFocus(this);">
+                  <option value="none">None</option>
+                  <option value="single">Single</option>
+                  <option value="double" selected="selected">Double</option>
+                </select></p>
+                <hr/>
+                <p id="p_ascii_intersection">ASCII intersection character: <select id="ascii_intersection" name="asciiIntersection" onchange="genPTT();">
+                  <option value="plus" selected="selected">Plus</option>
+                  <option value="horizontal_border">Horizontal Border</option>
+                  <option value="vertical_border">Vertical Border</option>
+                </select></p>
+                <p><input type="checkbox" id="spacePadding" checked="checked" onclick="genPTT();"> Ensure a padding of one space in each cell.</input></p>
+            </div>
+            <div class="col-md-6" id="predefined">
+                <p>Click on the image to select one of the predefined style:</p>
+                <div class="row">
+                    <div class="col-md-6" id="predefined-unicode">
+                        <p><a onClick="predefinedStyle('unicode1')"><img src="img/unicode1.png"></a><p>
+                        <p><a onClick="predefinedStyle('unicode2')"><img src="img/unicode2.png"></a><p>
+                        <p><a onClick="predefinedStyle('unicode3')"><img src="img/unicode3.png"></a><p>
+                        <p><a onClick="predefinedStyle('unicode4')"><img src="img/unicode4.png"></a><p>
+                        <p><a onClick="predefinedStyle('unicode5')"><img src="img/unicode5.png"></a><p>
+                        <p><a onClick="predefinedStyle('unicode6')"><img src="img/unicode6.png"></a><p>
+                    </div>
+                    <div class="col-md-6" id="predefined-ascii">
+                        <p><a onClick="predefinedStyle('ascii1')"><img src="img/ascii1.png"></a><p>
+                        <p><a onClick="predefinedStyle('ascii2')"><img src="img/ascii2.png"></a><p>
+                        <p><a onClick="predefinedStyle('ascii3')"><img src="img/ascii3.png"></a><p>
+                        <p><a onClick="predefinedStyle('ascii4')"><img src="img/ascii4.png"></a><p>
+                        <p><a onClick="predefinedStyle('ascii5')"><img src="img/ascii5.png"></a><p>
+                        <p><a onClick="predefinedStyle('ascii6')"><img src="img/ascii6.png"></a><p>
+                    </div>
+                </div>
+            </div>
 
-            <table class='table footer-table'>
+            <table class="table footer-table">
               <tr>
                 <th> Credits </th>
                 <th> Privacy </th>

@@ -8,3 +8,12 @@
 .footer-table th, .footer-table td{
     width: 33%;
 }
+
+.highlighted {
+    color: red;
+    background-color: yellow;
+}
+
+#predefined p {
+    text-align: center;
+}
