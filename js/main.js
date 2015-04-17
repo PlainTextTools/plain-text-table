@@ -504,7 +504,7 @@ function generateTable(highlight){
                 for (k = 0; k < end; k++) {
                     str += ' ';
                 }
-                str += entry;
+                str += escapeHTMLEntities(entry);
                 end = widths[j] - entry.length - end;
                 for (k = 0; k < end; k++) {
                     str += ' ';
@@ -795,3 +795,8 @@ function closeHighlighted(highlight, key){
     }
 }
 
+function escapeHTMLEntities(text) {
+    return text.replace(/[<>\&]/g, function(c) {
+       return '&#'+c.charCodeAt(0)+';';
+    });
+}
