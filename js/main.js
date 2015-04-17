@@ -49,14 +49,22 @@ function updateAsciiIntersectionVisibility(charsetValue) {
             $('#vertical_right_border').val('single');
         }
         $("#vertical_right_border option[value='double']").remove();
-
+        
     } else {
         $('#p_ascii_intersection').hide();
         
-        $("#vertical_left_border").append('<option value="double">Double</option>');
-        $("#vertical_inner_header_border").append('<option value="double">Double</option>');
-        $("#vertical_inner_border").append('<option value="double">Double</option>');
-        $("#vertical_right_border").append('<option value="double">Double</option>');
+        if($("#vertical_left_border option[value='double']").length == 0) {
+            $("#vertical_left_border").append('<option value="double">Double</option>');
+        }
+        if($("#vertical_inner_header_border option[value='double']").length == 0) {
+            $("#vertical_inner_header_border").append('<option value="double">Double</option>');
+        }
+        if($("#vertical_inner_border option[value='double']").length == 0) {
+            $("#vertical_inner_border").append('<option value="double">Double</option>');
+        }
+        if($("#vertical_right_border option[value='double']").length == 0) {
+            $("#vertical_right_border").append('<option value="double">Double</option>');
+        }
     }
 }
 
