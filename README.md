@@ -11,6 +11,7 @@ Please visit : http://lorefnon.me/plain-text-table
 * Interactive input table (using [handsontable](http://handsontable.com/))
 * Unicode or ASCII output
 * Flexible border configuration
+* Merged cell support (colspan and rowspan)
 * Multiline text in the cells
 * Text alignement support (horizontal and vertical)
 * Predefined style

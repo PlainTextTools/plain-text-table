@@ -12,6 +12,10 @@ Edit the grid and fill it with the the data you want to represent as text.
 With the context menu in each cell, the text alignment (vertical and horizontal) can be set.
 Those properties are reflected in the output.
 
+Merged cells are supported (colspan and rowspan).
+Select the cells you want to merge, use the context menu and select `Merge cells`.
+Merged cells can be unmerged the same way (with the menu item `Unmerge cells`)
+
 ## Charset option
 
 * Unicode
