@@ -225,7 +225,7 @@ __Checked__ (default):
     │ 3  │ Carrie │
     └────┴────────┘
 
-__Not checked__ (default):
+__Not checked__:
 
     ┌──┬──────┐
     │Id│Name  │
@@ -236,6 +236,11 @@ __Not checked__ (default):
     ├──┼──────┤
     │3 │Carrie│
     └──┴──────┘
+
+## Predefined style
+
+In order to help you with the configuration of the tool, you can select one of the predefined styles.
+Just click on the image corresponding to the style you want to apply.
 
 ## Output
 
