@@ -4,7 +4,7 @@ Interactively create and edit tables and export them to plain text.
 
 ## Use the tool online
 
-Please visit : http://lorefnon.me/plain-text-table
+Please visit : http://plaintexttools.github.io/plain-text-table
 
 ## Features
 
