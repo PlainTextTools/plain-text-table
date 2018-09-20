@@ -51,7 +51,7 @@ Ascii characters with spreadsheet headers:
 
 ## Get in touch / bug tracker
 
-Use the [plain-text-table issue tracker](http://github.com/lorefnon/plain-text-table/issues) on GitHub.
+Use the [plain-text-table issue tracker](https://github.com/PlainTextTools/plain-text-table/issues) on GitHub.
 
 ## License
 
