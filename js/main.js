@@ -589,8 +589,9 @@ function extractData(spacePadding, horizontalHeader, verticalHeader) {
                             lines[k] = lines[k] + ' ';
                         }
                     }
-                    if (lines[k].length > w) {
-                        w = lines[k].length;
+                    let convertLine = lines[k].replace(/[\u4e00-\u9fa5]/g, "aa");
+                    if (convertLine.length > w) {
+                        w = convertLine.length;
                     }
                 }
                 meta = table.getCellMeta(i, j);
@@ -1044,7 +1045,7 @@ function generateCellContent(data, offset, widths, i, j) {
         str += ' ';
     }
     str += escapeHTMLEntities(entry);
-    end = width - entry.length - end;
+    end = width - entry.replace(/[\u4e00-\u9fa5]/g, "aa").length - end;
     for (k = 0; k < end; k++) {
         str += ' ';
     }
